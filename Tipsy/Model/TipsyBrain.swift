@@ -13,13 +13,34 @@ struct TipsyBrain {
     var personalBill: Float?
     var splitFactor: Int?
     var tip: Int?
+    var totalAmount : Float?
     
     func getPersonalBill() -> Float {
-        return personalBill ?? 0.00
+        return personalBill ?? 100.00
     }
     
-    mutating func calculateIndividualBill(_ totalAmount: Float, _ nPersons: Int, _ tipValue: Int){
-        personalBill = (totalAmount*(1+(Float(tipValue)/100.00)))/Float(nPersons)
+    mutating func calculateIndividualBill(){
+        let percentualTip = 1.00+(Float(tip ?? 10)/100.00)
+        personalBill = (totalAmount ?? 100.00 * percentualTip)/Float(splitFactor ?? 2)
     }
     
+    mutating func setSplitFactor(_ factor: Int){
+        splitFactor = factor
+    }
+    
+    mutating func setTip(_ tipValue : Int){
+        tip = tipValue
+    }
+    
+    mutating func setTotalAmount(_ total : Float){
+        totalAmount = total
+    }
+    
+    func getTip() -> Int {
+        return tip ?? 10
+    }
+    
+    func getSplit() -> Int {
+        return splitFactor ?? 2
+    }
 }
